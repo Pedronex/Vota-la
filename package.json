@@ -1,0 +1,21 @@
+{
+  "name": "vota-la",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Pedro Soares Silva",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.9.1",
+    "dotenv": "^15.0.0",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "prisma": "^3.9.0"
+  }
+}
