@@ -11,11 +11,12 @@ datasource db {
 }
 
 model Usuario {
-  id     Int    @id @default(autoincrement())
-  login  String @unique
-  senha  String
-  perfil Int    @default(1)
-  Voto   Voto[]
+  id            Int     @id @default(autoincrement())
+  login         String  @unique
+  senha         String
+  administrador Boolean @default(false)
+  ativo         Boolean @default(true)
+  Voto          Voto[]
 }
 
 model Voto {

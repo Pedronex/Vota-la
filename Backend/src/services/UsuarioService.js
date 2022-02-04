@@ -15,10 +15,10 @@ module.exports = {
     if (!usuario) {
       return { erro: "Usuário ou senha inválido!" };
     }
-    return { login, perfil: usuario.perfil == 1 ? "Eleitor" : "Administrador" };
+    return { login, administrador: usuario.administrador };
   },
 
-  async store(login, senha, perfil) {
+  async store(login, senha, administrador) {
     const usuario = await prismaClient.usuario.findFirst({
       select: {
         login,
@@ -35,7 +35,7 @@ module.exports = {
         data: {
           login,
           senha,
-          perfil,
+          administrador,
         },
       });
 
@@ -43,7 +43,8 @@ module.exports = {
         {
           usuario: {
             login: resultado.login,
-            perfil: resultado.perfil,
+            administrado: resultado.administrador,
+            ativo: resultado.ativo,
           },
         },
         process.env.JWT_SECRET,
@@ -57,10 +58,36 @@ module.exports = {
         token,
         usuario: {
           login: resultado.login,
-          perfil: resultado.perfil,
+          administrador: resultado.administrador,
         },
       };
     }
+  },
+
+  async update(id, senha, administrador, ativo) {
+    const usuario = await prismaClient.usuario.findFirst({
+      select: {
+        login,
+      },
+      where: {
+        id,
+      },
+    });
+
+    if (!usuario) {
+      return { erro: "Usuário não localizado" };
+    }
+
+    const resultado = await prismaClient.usuario.update({
+      where: { id },
+      data: {
+        senha,
+        administrador,
+        ativo,
+      },
+    });
+
+    return resultado;
   },
 
   async delete(id) {

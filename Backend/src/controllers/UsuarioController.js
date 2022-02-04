@@ -13,11 +13,11 @@ module.exports = {
   },
 
   async store(req, res) {
-    const { login, senha, perfil = 1 } = req.body;
+    const { login, senha, admin = false } = req.body;
 
     const cryptoSenha = crypto.createHash("md5").update(senha).digest("hex");
 
-    const resultado = await servico.store(login, cryptoSenha, perfil);
+    const resultado = await servico.store(login, cryptoSenha, admin);
 
     if (resultado?.erro) {
       return res.status(400).json(resultado);
