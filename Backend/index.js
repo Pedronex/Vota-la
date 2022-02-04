@@ -8,4 +8,6 @@ app.use(express.json());
 
 app.use(Routes);
 
-app.listen(4405, () => console.log("Servidor está ligado na porta 4405"));
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => console.log(`Servidor está ligado na porta ${port}`));
