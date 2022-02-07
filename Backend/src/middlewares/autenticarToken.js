@@ -1,15 +1,15 @@
-import { verify } from "jsonwebtoken";
+const { verify } = require("jsonwebtoken");
 
-export function autenticarToken(req, res, next) {
-  const token = req.headers.authorization;
+function autenticarToken(req, res, next) {
+  const authToken = req.headers.authorization;
 
-  if (!token) {
+  if (!authToken) {
     return res.status(401).json({
       erro: "Token Inválido!",
     });
   }
 
-  const [, token] = token.split(" ");
+  const [, token] = authToken.split(" ");
 
   try {
     const { sub } = verify(token, process.env.JWT_SECRET);
@@ -19,3 +19,5 @@ export function autenticarToken(req, res, next) {
     return res.status(401).json({ erro: "Token expirou!" });
   }
 }
+
+module.exports = { autenticarToken };

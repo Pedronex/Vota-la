@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Usuario {
-  id            Int     @id @default(autoincrement())
+  id            String  @id @default(uuid())
   login         String  @unique
   senha         String
   administrador Boolean @default(false)
@@ -24,7 +24,7 @@ model Voto {
   usuario     Usuario   @relation(fields: [usuarioId], references: [id])
   votacao     Votacao   @relation(fields: [votacaoId], references: [id])
   candidato   Candidato @relation(fields: [candidatoId], references: [id])
-  usuarioId   Int
+  usuarioId   String
   votacaoId   Int
   candidatoId Int
 }

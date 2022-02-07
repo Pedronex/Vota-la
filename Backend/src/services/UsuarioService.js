@@ -5,23 +5,46 @@ module.exports = {
   async index(login, senha) {
     const usuario = await prismaClient.usuario.findFirst({
       select: {
-        perfil: true,
+        id: true,
+        login: true,
+        administrador: true,
+        ativo: true,
       },
       where: {
         login,
         senha,
       },
     });
+
     if (!usuario) {
       return { erro: "Usuário ou senha inválido!" };
     }
-    return { login, administrador: usuario.administrador };
+    const token = sign(
+      {
+        usuario: {
+          login: usuario.login,
+          administrado: usuario.administrador,
+          ativo: usuario.ativo,
+        },
+      },
+      process.env.JWT_SECRET,
+      {
+        subject: usuario.id,
+        expiresIn: "1d",
+      }
+    );
+    return {
+      token,
+      identificador: usuario.id,
+      login,
+      administrador: usuario.administrador,
+    };
   },
 
   async store(login, senha, administrador) {
     const usuario = await prismaClient.usuario.findFirst({
       select: {
-        login,
+        login: true,
       },
       where: {
         login,
@@ -31,46 +54,30 @@ module.exports = {
     if (usuario) {
       return { erro: "Usuário já cadastrado!" };
     } else {
-      const resultado = await prismaClient.usuario.create({
-        data: {
-          login,
-          senha,
-          administrador,
-        },
-      });
-
-      const token = sign(
-        {
-          usuario: {
-            login: resultado.login,
-            administrado: resultado.administrador,
-            ativo: resultado.ativo,
+      try {
+        await prismaClient.usuario.create({
+          data: {
+            login,
+            senha,
+            administrador,
           },
-        },
-        process.env.JWT_SECRET,
-        {
-          subject: resultado.id,
-          expiresIn: "1d",
-        }
-      );
-
-      return {
-        token,
-        usuario: {
+        });
+        return {
           login: resultado.login,
           administrador: resultado.administrador,
-        },
-      };
+        };
+      } catch (erro) {
+        return {
+          erro: "Não foi possivel realizar a criação do usuário",
+        };
+      }
     }
   },
 
-  async update(id, senha, administrador, ativo) {
+  async update(login, senha, administrador, ativo) {
     const usuario = await prismaClient.usuario.findFirst({
-      select: {
-        login,
-      },
       where: {
-        id,
+        login,
       },
     });
 
@@ -78,16 +85,20 @@ module.exports = {
       return { erro: "Usuário não localizado" };
     }
 
-    const resultado = await prismaClient.usuario.update({
-      where: { id },
-      data: {
-        senha,
-        administrador,
-        ativo,
-      },
-    });
-
-    return resultado;
+    try {
+      await prismaClient.usuario.update({
+        where: { login: usuario.login },
+        data: {
+          senha,
+          administrador,
+          ativo,
+        },
+      });
+      return { sucesso: "Dados atualizados com sucesso" };
+    } catch (erro) {
+      console.log(erro);
+      return { erro: "Não foi possivel realizar a atualização dos dados" };
+    }
   },
 
   async delete(id) {
