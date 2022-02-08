@@ -30,18 +30,21 @@ model Voto {
 }
 
 model Votacao {
-  id          Int      @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   titulo      String
   descricao   String
   ini_votacao DateTime
   fin_votacao DateTime
   Voto        Voto[]
+  Candidato   Candidato[]
 }
 
 model Candidato {
-  id          Int    @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   nome        String
   localizacao String
   cargo       String
+  Votacao     Votacao @relation(fields: [votacaoId], references: [id])
   Voto        Voto[]
+  votacaoId   Int
 }

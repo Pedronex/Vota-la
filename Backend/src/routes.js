@@ -1,5 +1,7 @@
 const UsuarioController = require("./controllers/UsuarioController");
 const VotacaoController = require("./controllers/VotacaoController");
+const CandidatoController = require("./controllers/CandidatoController");
+
 const { autenticarToken } = require("./middlewares/autenticarToken");
 const { verificarAdmin } = require("./middlewares/verificarAdmin");
 
@@ -34,9 +36,9 @@ routes.post(
   VotacaoController.store
 );
 
-routes.get("/votacoes", VotacaoController.index);
+routes.get("/votacoes", autenticarToken, VotacaoController.index);
 
-routes.get("/votacao", VotacaoController.show);
+routes.get("/votacao", autenticarToken, VotacaoController.show);
 
 routes.put(
   "/alterarVotacao",
@@ -50,6 +52,28 @@ routes.delete(
   autenticarToken,
   verificarAdmin,
   VotacaoController.delete
+);
+
+// Rotas de Candidato
+routes.post(
+  "/criarCandidato",
+  autenticarToken,
+  verificarAdmin,
+  CandidatoController.store
+);
+
+routes.put(
+  "/alterarCandidato",
+  autenticarToken,
+  verificarAdmin,
+  CandidatoController.update
+);
+
+routes.delete(
+  "/deletarCandidato",
+  autenticarToken,
+  verificarAdmin,
+  CandidatoController.delete
 );
 
 module.exports = routes;

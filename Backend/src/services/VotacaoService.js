@@ -13,6 +13,9 @@ module.exports = {
   async show(id) {
     try {
       return prismaClient.votacao.findFirst({
+        include: {
+          Candidato: true,
+        },
         where: {
           id,
         },
