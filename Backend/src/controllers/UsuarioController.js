@@ -2,6 +2,11 @@ const servico = require("../services/UsuarioService");
 const crypto = require("crypto");
 
 module.exports = {
+  async index(req, res) {
+    const resultado = await servico.index();
+
+    return res.json(resultado);
+  },
   async show(req, res) {
     const { login = "", senha = "" } = req.body;
 

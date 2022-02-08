@@ -15,6 +15,8 @@ routes.get("/", (req, res) => {
   res.send("Servidor está ligado");
 });
 
+routes.get("/usuarios", autenticarToken, UsuarioController.index);
+
 routes.post("/login", UsuarioController.show);
 routes.post(
   "/registrar",
