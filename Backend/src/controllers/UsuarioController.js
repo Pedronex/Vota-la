@@ -2,12 +2,12 @@ const servico = require("../services/UsuarioService");
 const crypto = require("crypto");
 
 module.exports = {
-  async index(req, res) {
+  async show(req, res) {
     const { login = "", senha = "" } = req.body;
 
     const cryptoSenha = crypto.createHash("md5").update(senha).digest("hex");
 
-    const resultado = await servico.index(login, cryptoSenha);
+    const resultado = await servico.show(login, cryptoSenha);
 
     return res.json(resultado);
   },
@@ -18,6 +18,20 @@ module.exports = {
     const cryptoSenha = crypto.createHash("md5").update(senha).digest("hex");
 
     const resultado = await servico.store(login, cryptoSenha, admin);
+
+    if (resultado?.erro) {
+      return res.status(400).json(resultado);
+    } else {
+      return res.json(resultado);
+    }
+  },
+
+  async update(req, res) {
+    const { login, senha, admin, ativo = true } = req.body;
+
+    const cryptoSenha = crypto.createHash("md5").update(senha).digest("hex");
+
+    const resultado = await servico.update(login, cryptoSenha, admin, ativo);
 
     if (resultado?.erro) {
       return res.status(400).json(resultado);
