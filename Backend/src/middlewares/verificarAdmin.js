@@ -8,9 +8,14 @@ async function verificarAdmin(req, res, next) {
     },
   });
 
-  if (!adminUsuario) return { erro: "Usuário da operação não identificado" };
+  if (!adminUsuario)
+    return res
+      .status(401)
+      .json({ erro: "Usuário da operação não identificado" });
   if (!adminUsuario.administrador)
-    return { erro: "Usuário sem permissão para a atividade" };
+    return res
+      .status(401)
+      .json({ erro: "Usuário sem permissão para a atividade" });
 
   next();
 }

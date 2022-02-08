@@ -1,4 +1,5 @@
 const UsuarioController = require("./controllers/UsuarioController");
+const VotacaoController = require("./controllers/VotacaoController");
 const { autenticarToken } = require("./middlewares/autenticarToken");
 const { verificarAdmin } = require("./middlewares/verificarAdmin");
 
@@ -11,7 +12,7 @@ routes.get("/", (req, res) => {
   res.send("Servidor está ligado");
 });
 
-routes.post("/login", UsuarioController.index);
+routes.post("/login", UsuarioController.show);
 routes.post(
   "/registrar",
   autenticarToken,
@@ -26,5 +27,29 @@ routes.put(
 );
 
 // Rotas de Votação
+routes.post(
+  "/criarVotacao",
+  autenticarToken,
+  verificarAdmin,
+  VotacaoController.store
+);
+
+routes.get("/votacoes", VotacaoController.index);
+
+routes.get("/votacao", VotacaoController.show);
+
+routes.put(
+  "/alterarVotacao",
+  autenticarToken,
+  verificarAdmin,
+  VotacaoController.update
+);
+
+routes.delete(
+  "/deletarVotacao",
+  autenticarToken,
+  verificarAdmin,
+  VotacaoController.delete
+);
 
 module.exports = routes;

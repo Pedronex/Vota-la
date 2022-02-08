@@ -2,7 +2,7 @@ const { sign } = require("jsonwebtoken");
 const prismaClient = require("../prisma");
 
 module.exports = {
-  async index(login, senha) {
+  async show(login, senha) {
     const usuario = await prismaClient.usuario.findFirst({
       select: {
         id: true,

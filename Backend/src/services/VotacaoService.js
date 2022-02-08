@@ -1,12 +1,94 @@
-const { sign } = require("jsonwebtoken");
 const prismaClient = require("../prisma");
 
 module.exports = {
-  async index(login, senha) {},
+  async index() {
+    try {
+      return prismaClient.votacao.findMany({});
+    } catch (erro) {
+      console.log(erro);
+      return { erro: "Não foi possivel realizar a listagem das votações" };
+    }
+  },
 
-  async store(login, senha, administrador) {},
+  async show(id) {
+    try {
+      return prismaClient.votacao.findFirst({
+        where: {
+          id,
+        },
+      });
+    } catch (erro) {
+      console.log(erro);
+      return { erro: `Não foi possivel apresentar a votação ${id}` };
+    }
+  },
 
-  async update(login, senha, administrador, ativo) {},
+  async store(titulo, descricao, inicio, fim) {
+    try {
+      return prismaClient.votacao.create({
+        data: {
+          titulo,
+          descricao,
+          ini_votacao: inicio,
+          fin_votacao: fim,
+        },
+      });
+    } catch (erro) {
+      console.log(erro);
+      return { erro: "Não foi possivel criar a votação" };
+    }
+  },
 
-  async delete(id) {},
+  async update(id, titulo, descricao, inicio, fim) {
+    const votacao = await prismaClient.votacao.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (!votacao) {
+      return { erro: "votação não localizada" };
+    }
+
+    try {
+      await prismaClient.votacao.update({
+        where: { id },
+        data: {
+          titulo: titulo || votacao.titulo,
+          descricao: descricao || votacao.descricao,
+          ini_votacao: inicio || votacao.ini_votacao,
+          fin_votacao: fim || votacao.fin_votacao,
+        },
+      });
+
+      return { sucesso: "Foi realizada a alteração na votação" };
+    } catch (erro) {
+      console.log(erro);
+      return { erro: "Não foi possivel realizar a alteração na votação" };
+    }
+  },
+
+  async delete(id) {
+    const votacao = await prismaClient.votacao.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    if (!votacao) {
+      return { erro: "Votação não localizada" };
+    }
+
+    try {
+      await prismaClient.votacao.delete({
+        where: {
+          id,
+        },
+      });
+      return { sucesso: "A votação foi deletada!" };
+    } catch (erro) {
+      console.log(erro);
+      return { erro: "Não foi possivel deletar a votação" };
+    }
+  },
 };
