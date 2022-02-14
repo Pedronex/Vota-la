@@ -1,6 +1,7 @@
 import { Image, Text, View, Platform, TextInput } from "react-native";
 import styled from "styled-components/native";
 import Constants from "expo-constants";
+import { fonts } from "../../styles";
 
 const statusbarHeight =
   Platform.OS === "android" ? Constants.statusBarHeight : 0;
@@ -8,7 +9,7 @@ const statusbarHeight =
 export const Header = styled(View)`
   width: 100%;
 
-  padding-top: ${statusbarHeight + 2 + "px"};
+  padding-top: ${statusbarHeight + 5 + "px"};
 
   background: #453f8f;
 

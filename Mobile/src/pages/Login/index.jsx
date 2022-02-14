@@ -1,4 +1,4 @@
-import { useNavigation } from "react-navigation-hooks";
+import { useNavigation } from "@react-navigation/native";
 import {
   Button,
   Container,
@@ -16,7 +16,9 @@ import {
 export const Login = () => {
   const navigation = useNavigation();
 
-  const handleToMenu = () => {};
+  const handleToMenu = () => {
+    navigation.navigate("Menu");
+  };
 
   return (
     <Container>

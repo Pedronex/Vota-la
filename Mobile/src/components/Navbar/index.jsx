@@ -1,6 +1,6 @@
 import { Header, Logo, TextHeader } from "./styles";
 
-export const Login = () => {
+export const Navbar = () => {
   return (
     <Header>
       <Logo />
