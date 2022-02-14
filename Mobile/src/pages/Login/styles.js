@@ -26,8 +26,8 @@ export const Form = styled(View)`
   justify-content: center;
   align-items: center;
 
-  border-bottom-left-radius: 15px 
-  border-bottom-right-radius: 15px 
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 `;
 
 export const Footer = styled(View)`
@@ -85,6 +85,20 @@ export const InputInfo = styled(Text)`
   font-size: 16px;
   font-weight: bold;
   font-family: Roboto_400Regular;
+`;
+
+export const Info = styled(Text)`
+  background-color: #b10d0d;
+
+  padding: 2%;
+
+  border-radius: 10px;
+
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: Roboto_400Regular;
+  text-align: center;
 `;
 
 export const GroupInput = styled(View)`

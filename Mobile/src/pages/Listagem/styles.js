@@ -13,37 +13,43 @@ export const Container = styled(View)`
   background-color: #fff;
 `;
 
+export const ListView = styled(View)`
+  width: 80%;
+`;
+
 export const Button = styled(RectButton)`
-  width: 95%;
-  height: 15%;
+  width: 100%;
   border-radius: 30px;
 `;
 
 export const ButtonView = styled(View)`
-  width: 100%;
-  height: 100%;
-
-  background-color: #4374a8;
-
-  flex-direction: row;
-  justify-content: space-evenly;
   align-items: center;
 
   border-radius: 30px;
 
   border-width: 3px;
   border-color: #83aedb;
+
   padding: 2%;
 `;
 
-export const ButtonText = styled(Text)`
-  width: 70%;
+export const TextHeader = styled(Text)`
+  width: 100%;
 
-  color: #fff;
-  font-family: ${fonts.familyTitle};
+  color: #000;
+  font-family: ${fonts.familyContent};
   font-weight: bold;
-  font-size: 24px;
+  font-size: 18px;
   text-align: center;
+`;
+
+export const TextContent = styled(Text)`
+  width: 100%;
+
+  color: ${(props) => props.colorText || "#000"};
+  font-family: ${fonts.familyContent};
+  font-weight: bold;
+  font-size: 14px;
 `;
 
 export const ButtonLogo = styled(Image).attrs({
