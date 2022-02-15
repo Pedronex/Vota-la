@@ -86,4 +86,9 @@ routes.delete("/deletarVoto", autenticarToken, VotoController.delete);
 
 routes.get("/listaVotos", autenticarToken, VotoController.index);
 
+// Validação de token
+routes.get("/validar", autenticarToken, (req, res) => {
+  res.json({ sucesso: "ok" });
+});
+
 module.exports = routes;

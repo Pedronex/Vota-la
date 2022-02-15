@@ -32,7 +32,7 @@ model Voto {
 model Votacao {
   id          Int         @id @default(autoincrement())
   titulo      String
-  descricao   String
+  descricao   String      @db.Text
   ini_votacao DateTime
   fin_votacao DateTime
   Voto        Voto[]

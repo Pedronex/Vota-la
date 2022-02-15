@@ -1,7 +1,6 @@
-import { useNavigation } from "@react-navigation/native";
 import { Controller, useForm } from "react-hook-form";
 import { Alert } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 import { api } from "../../Service/api";
 import {
   Button,
@@ -9,18 +8,13 @@ import {
   Footer,
   Form,
   GroupInput,
-  Header,
   Info,
   Input,
   InputInfo,
-  Logo,
   TextButton,
-  TextHeader,
 } from "./styles";
 
 export const Login = () => {
-  const navigation = useNavigation();
-
   const {
     control,
     handleSubmit,
@@ -32,17 +26,12 @@ export const Login = () => {
     if (resultado.data?.erro) {
       Alert.alert("Alerta", resultado.data?.erro);
     } else {
-      await AsyncStorage.setItem("user", JSON.stringify(resultado.data));
-      navigation.navigate("Menu");
+      await SecureStore.setItemAsync("user", JSON.stringify(resultado.data));
     }
   };
 
   return (
     <Container>
-      <Header>
-        <Logo />
-        <TextHeader>Sistema de Votação</TextHeader>
-      </Header>
       <Form>
         <Controller
           control={control}
@@ -63,7 +52,13 @@ export const Login = () => {
           render={({ field: { onChange, onBlur, value } }) => (
             <GroupInput>
               <InputInfo>Senha:</InputInfo>
-              <Input onBlur={onBlur} onChangeText={onChange} value={value} />
+              <Input
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                autoComplete="password"
+                secureTextEntry={true}
+              />
             </GroupInput>
           )}
           name="senha"

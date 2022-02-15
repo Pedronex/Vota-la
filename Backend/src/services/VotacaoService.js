@@ -3,7 +3,14 @@ const prismaClient = require("../prisma");
 module.exports = {
   async index() {
     try {
-      return prismaClient.votacao.findMany({});
+      return prismaClient.votacao.findMany({
+        select: {
+          id: true,
+          titulo: true,
+          ini_votacao: true,
+          fin_votacao: true,
+        },
+      });
     } catch (erro) {
       console.log(erro);
       return { erro: "Não foi possivel realizar a listagem das votações" };

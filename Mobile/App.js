@@ -5,6 +5,7 @@ import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
 import { Raleway_400Regular } from "@expo-google-fonts/raleway";
 import { Roboto_400Regular } from "@expo-google-fonts/roboto";
+import { Navbar } from "./src/components/Navbar";
 
 export default function App() {
   let [fontsCarregadas] = useFonts({
@@ -18,6 +19,7 @@ export default function App() {
 
   return (
     <>
+      <Navbar />
       <Routes />
       <StatusBar style="auto" />
     </>

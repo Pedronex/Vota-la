@@ -27,10 +27,9 @@ export const ButtonView = styled(View)`
 
   border-radius: 30px;
 
-  border-width: 3px;
-  border-color: #83aedb;
-
-  padding: 2%;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-bottom: 3%;
 `;
 
 export const TextHeader = styled(Text)`
@@ -57,4 +56,52 @@ export const ButtonLogo = styled(Image).attrs({
 })`
   width: 30%;
   height: 100%;
+`;
+
+export const Separator = styled(View)`
+  height: 5px;
+
+  background-color: rgba(43, 6, 78, 0.75);
+  border-radius: 30px;
+
+  width: 100%;
+  align-self: center;
+
+  margin: 3%;
+`;
+
+export const ButtonBack = styled(RectButton)`
+  width: 90%;
+
+  border-radius: 10px;
+  background-color: #b10d0d;
+`;
+
+export const ButtonLogout = styled(RectButton)`
+  align-items: center;
+  justify-content: space-between;
+
+  border-radius: 10px;
+
+  flex-direction: row;
+`;
+
+export const ButtonText = styled(Text)`
+  color: ${(props) => props?.color || '#fff'};
+  font-family: ${fonts.familyTitle};
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  margin-left: 3%;
+`;
+
+export const Footer = styled(View)`
+  position: absolute;
+  bottom: 2%;
+  left: 0px;
+  right: 0px;
+
+  flex-direction: row;
+
+  justify-content: space-evenly;
 `;

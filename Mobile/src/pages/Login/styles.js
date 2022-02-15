@@ -39,32 +39,6 @@ export const Footer = styled(View)`
   justify-content: space-around;
 `;
 
-export const TextHeader = styled(Text)`
-  align-self: center;
-
-  color: #fff;
-  font-size: 24px;
-  font-weight: bold;
-  font-family: ${fonts.familyTitle};
-  text-align: center;
-
-  width: 80%;
-`;
-
-export const Header = styled(View)`
-  width: 100%;
-
-  padding-top: ${statusbarHeight + 2 + "px"};
-
-  background: #453f8f;
-
-  padding-bottom: 2%;
-
-  flex-direction: row;
-
-  elevation: 5;
-`;
-
 export const Input = styled(TextInput)`
   width: 100%;
 
@@ -129,12 +103,4 @@ export const TextButton = styled(Text)`
   font-weight: bold;
   font-family: Roboto_400Regular;
   text-align: center;
-`;
-
-export const Logo = styled(Image).attrs({
-  source: require("../../assets/Registrar.png"),
-  resizeMode: "center",
-})`
-  width: 10%;
-  height: 100%;
 `;
