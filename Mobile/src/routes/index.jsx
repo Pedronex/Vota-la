@@ -22,6 +22,7 @@ export const Routes = () => {
             Authorization: `Bearer ${data?.token}`,
           },
         });
+        dispatch({ type: "SUCESSO", data });
       } catch (error) {
         await SecureStore.deleteItemAsync("user");
         dispatch({ type: "LOGOUT" });

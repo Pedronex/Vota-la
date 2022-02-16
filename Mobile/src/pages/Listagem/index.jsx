@@ -104,10 +104,12 @@ export const Listagem = () => {
           }}
         />
       </ListView>
-      <ButtonLogout onPress={sairDoPerfil}>
-        <Feather name="log-out" size={35} />
-        <ButtonText color="#000">Sair do Perfil</ButtonText>
-      </ButtonLogout>
+      {!user?.administrador && (
+        <ButtonLogout onPress={sairDoPerfil}>
+          <Feather name="log-out" size={35} />
+          <ButtonText color="#000">Sair do Perfil</ButtonText>
+        </ButtonLogout>
+      )}
       {user?.administrador && (
         <Footer>
           <ButtonBack onPress={voltar}>

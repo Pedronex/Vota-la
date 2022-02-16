@@ -5,15 +5,23 @@ import {
   ButtonText,
   ButtonLogo,
 } from "./styles";
-import { Navbar } from "../../components/Navbar";
 import { useNavigation } from "@react-navigation/native";
+import { Feather } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
+import * as SecureStore from "expo-secure-store";
 
 export const Menu = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   function navegarPara(nome) {
     navigation.navigate(nome);
   }
+
+  const sairDoPerfil = async () => {
+    await SecureStore.deleteItemAsync("user");
+    dispatch({ type: "LOGOUT" });
+  };
 
   return (
     <Container>
@@ -45,6 +53,12 @@ export const Menu = () => {
         <ButtonView>
           <ButtonLogo source={require("../../assets/Relatorio.png")} />
           <ButtonText>Gerar Relatório da Votação</ButtonText>
+        </ButtonView>
+      </Button>
+      <Button onPress={sairDoPerfil}>
+        <ButtonView>
+          <Feather name="log-out" size={50} color={"#fff"} />
+          <ButtonText>Sair do Perfil</ButtonText>
         </ButtonView>
       </Button>
     </Container>

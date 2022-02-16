@@ -52,3 +52,8 @@ export const ButtonLogo = styled(Image).attrs({
   width: 30%;
   height: 100%;
 `;
+
+export const ButtonLogout = styled(RectButton)`
+  width: 95%;
+  align-items: center;
+`;
