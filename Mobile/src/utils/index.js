@@ -38,5 +38,6 @@ export function formatDateTime(textDate) {
     formatDate += date.getMinutes();
   }
 
+  console.log(formatDate)
   return formatDate;
 }

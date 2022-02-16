@@ -1,16 +1,37 @@
 const prismaClient = require("../prisma");
 
 module.exports = {
-  async index() {
+  async index(idUsuario) {
     try {
-      return prismaClient.votacao.findMany({
+      const listaVotacoes = await prismaClient.votacao.findMany({
         select: {
           id: true,
           titulo: true,
           ini_votacao: true,
           fin_votacao: true,
+          Voto: {
+            select: {
+              usuarioId: true
+            }
+          }
         },
       });
+
+      const listaResultado = [];
+
+      listaVotacoes.forEach(({ id, titulo, ini_votacao, fin_votacao, Voto }) => {
+        let participou = false;
+        Voto.forEach(({ usuarioId }) => {
+          if (!participou) {
+            console.log(idUsuario == usuarioId);
+            participou = idUsuario == usuarioId;
+          }
+        })
+
+        listaResultado.push({ id, titulo, ini_votacao, fin_votacao, participou })
+      })
+
+      return listaResultado;
     } catch (erro) {
       console.log(erro);
       return { erro: "Não foi possivel realizar a listagem das votações" };

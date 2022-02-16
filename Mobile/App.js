@@ -6,6 +6,8 @@ import { useFonts } from "expo-font";
 import { Raleway_400Regular } from "@expo-google-fonts/raleway";
 import { Roboto_400Regular } from "@expo-google-fonts/roboto";
 import { Navbar } from "./src/components/Navbar";
+import { Provider } from "react-redux";
+import { store } from "./src/config/store";
 
 export default function App() {
   let [fontsCarregadas] = useFonts({
@@ -18,10 +20,10 @@ export default function App() {
   }
 
   return (
-    <>
+    <Provider store={store}>
       <Navbar />
       <Routes />
       <StatusBar style="auto" />
-    </>
+    </Provider>
   );
 }

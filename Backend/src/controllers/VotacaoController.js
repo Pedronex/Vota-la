@@ -2,7 +2,9 @@ const servico = require("../services/VotacaoService");
 
 module.exports = {
   async index(req, res) {
-    const resultado = await servico.index();
+    const { id } = req;
+    console.log(id);
+    const resultado = await servico.index(id);
 
     if (resultado?.erro) {
       return res.status(400).json(resultado);
@@ -64,12 +66,12 @@ module.exports = {
       return res.status(400).json({ erro: "Tipo de id Inválido!" });
     }
 
-    const resultado = await servico.update(id, titulo, descricao, inicio, fim);
+    const resultado = await servico.update(id, titulo, descricao, isValidDate(new Date(inicio)) ? new Date(inicio) : null, isValidDate(new Date(fim)) ? new Date(fim) : null);
 
     if (resultado?.erro) {
-      return res.status(400).json(resultado.erro);
+      return res.status(400).json(resultado);
     } else {
-      return res.json(resultado.sucesso);
+      return res.json(resultado);
     }
   },
   async delete(req, res) {

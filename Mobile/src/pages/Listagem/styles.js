@@ -8,13 +8,13 @@ export const Container = styled(View)`
   flex: 1;
 
   align-items: center;
-  justify-content: space-evenly;
 
   background-color: #fff;
 `;
 
 export const ListView = styled(View)`
-  width: 80%;
+  min-width: 80%;
+  height: 85%;
 `;
 
 export const Button = styled(RectButton)`

@@ -28,6 +28,18 @@ export const Voto = () => {
   const votar = async () => {
     const { token } = JSON.parse(await SecureStore.getItemAsync("user"));
     if (selectedId) {
+      if (params.status) {
+        await api
+          .delete(`/deletarVoto?idVotacao=${params.idVotacao}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .catch((erro) => {
+            navigate("Falha", JSON.parse(erro.request._response).erro);
+            console.log(JSON.parse(erro.request._response));
+          });
+      }
       api
         .post(
           "/criarVoto",

@@ -16,20 +16,19 @@ import {
 } from "./styles";
 import { api } from "../../Service/api";
 import { formatDateTime } from "../../utils";
-import { FlatList } from "react-native";
+import { FlatList, ScrollView } from "react-native";
 
 export const Detalhes = (id) => {
-  const route = useRoute();
+  const { params } = useRoute();
   const [candidatos, setCandidatos] = useState([]);
   const [item, setItem] = useState(null);
 
   const navigation = useNavigation();
 
   const carregarLista = async () => {
-    const { params } = route;
     const data = JSON.parse(await SecureStore.getItemAsync("user"));
     if (data) {
-      const resultado = await api.get(`/votacao?id=${params}`, {
+      const resultado = await api.get(`/votacao?id=${params.id}`, {
         headers: {
           Authorization: `Bearer ${data.token}`,
         },
@@ -60,6 +59,7 @@ export const Detalhes = (id) => {
       candidatos,
       idVotacao: item.id,
       titulo: item.titulo,
+      status: params.status,
     });
   };
 
@@ -72,7 +72,9 @@ export const Detalhes = (id) => {
         {formatDateTime(item?.fin_votacao)}
       </ContentText>
       <ContentText align="left">Detalhes da Votação:</ContentText>
-      <DescriptionText>{item?.descricao}</DescriptionText>
+      <ScrollView style={{ maxHeight: "25%" }}>
+        <DescriptionText>{item?.descricao}</DescriptionText>
+      </ScrollView>
       <ContentText>Lista de Candidatos:</ContentText>
       <ListView>
         <FlatList
@@ -92,8 +94,13 @@ export const Detalhes = (id) => {
         />
       </ListView>
       <Footer>
-        <Button color="#195923" onPress={navegarParaVotacao}>
-          <TextButton>Participar</TextButton>
+        <Button
+          color={params?.status ? "#A4A729" : "#195923"}
+          onPress={navegarParaVotacao}
+        >
+          <TextButton>
+            {params?.status ? "Alterar Voto" : "Participar"}
+          </TextButton>
         </Button>
         <Button color="#B10D0D" onPress={voltar}>
           <TextButton>Voltar</TextButton>

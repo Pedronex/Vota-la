@@ -13,6 +13,7 @@ import {
   InputInfo,
   TextButton,
 } from "./styles";
+import { useDispatch } from "react-redux";
 
 export const Login = () => {
   const {
@@ -21,12 +22,17 @@ export const Login = () => {
     formState: { errors },
   } = useForm({});
 
+  const dispatch = useDispatch();
+
   const logar = async (data) => {
+    dispatch({ type: "LOGIN" });
     const resultado = await api.post("/login", data);
     if (resultado.data?.erro) {
       Alert.alert("Alerta", resultado.data?.erro);
+      dispatch({ type: "FALHOU" });
     } else {
       await SecureStore.setItemAsync("user", JSON.stringify(resultado.data));
+      dispatch({ type: "SUCESSO", data: resultado.data });
     }
   };
 

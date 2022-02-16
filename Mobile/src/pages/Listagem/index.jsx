@@ -18,6 +18,7 @@ import { FlatList } from "react-native";
 import { formatDateTime } from "../../utils";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
 
 export const Listagem = () => {
   const [refresh, setRefresh] = useState(false);
@@ -25,24 +26,29 @@ export const Listagem = () => {
   const [user, setUser] = useState({ administrador: false });
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const carregarLista = async () => {
+    setListaVotacao([]);
     const user = JSON.parse(await SecureStore.getItemAsync("user"));
-    const resultado = await api.get("/votacoes", {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-    if (resultado.status == 200) {
-      setListaVotacao(resultado.data);
+    if (user) {
+      const resultado = await api.get("/votacoes", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      if (resultado.status == 200) {
+        setListaVotacao(resultado.data);
+        console.log(resultado.data);
+      }
+      setUser(user);
+      setRefresh(false);
+      return resultado.data;
     }
-    setUser(user);
-    setRefresh(false);
-    return resultado.data;
   };
 
-  const navegarParaDetalhes = (id) => {
-    navigation.navigate("Detalhes", id);
+  const navegarParaDetalhes = (id, status) => {
+    navigation.navigate("Detalhes", { id, status });
   };
 
   const voltar = () => {
@@ -55,6 +61,7 @@ export const Listagem = () => {
 
   const sairDoPerfil = async () => {
     await SecureStore.deleteItemAsync("user");
+    dispatch({ type: "LOGOUT" });
   };
 
   useEffect(() => {
@@ -63,6 +70,7 @@ export const Listagem = () => {
 
   return (
     <Container>
+      <TextHeader>Lista de Votações</TextHeader>
       <ListView>
         <FlatList
           data={listaVotacao}
@@ -72,7 +80,9 @@ export const Listagem = () => {
             carregarLista();
           }}
           renderItem={({ item }) => (
-            <Button onPress={() => navegarParaDetalhes(item?.id)}>
+            <Button
+              onPress={() => navegarParaDetalhes(item?.id, item?.participou)}
+            >
               <ButtonView>
                 <TextHeader>{item?.titulo}</TextHeader>
                 <TextContent>
@@ -81,7 +91,11 @@ export const Listagem = () => {
                 <TextContent>
                   Fim da Votação: {formatDateTime(item?.fin_votacao)}
                 </TextContent>
-                <TextContent colorText="#B10D0D">Não Participou</TextContent>
+                <TextContent
+                  colorText={item?.participou ? "#195923" : "#B10D0D"}
+                >
+                  {item?.participou ? "Participou" : "Não participou"}
+                </TextContent>
               </ButtonView>
             </Button>
           )}
