@@ -47,6 +47,7 @@ module.exports = {
       identificador: usuario.id,
       login,
       administrador: usuario.administrador,
+      ativo: usuario.ativo
     };
   },
 
@@ -96,14 +97,15 @@ module.exports = {
     }
 
     try {
-      await prismaClient.usuario.update({
-        where: { login: usuario.login },
+      const resultado = await prismaClient.usuario.update({
+        where: { login },
         data: {
-          senha,
-          administrador,
-          ativo,
+          senha: senha || usuario.senha,
+          administrador: administrador || usuario.administrador,
+          ativo: ativo == undefined ? usuario.ativo : ativo,
         },
       });
+      console.log(resultado)
       return { sucesso: "Dados atualizados com sucesso" };
     } catch (erro) {
       console.log(erro);

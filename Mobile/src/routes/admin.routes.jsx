@@ -8,6 +8,7 @@ import { Falha } from "../pages/Falha";
 import { Detalhes } from "../pages/Detalhes";
 import { createStackNavigator } from "@react-navigation/stack";
 import { CriarVoto } from "../pages/CriarVoto";
+import { Usuario } from "../pages/Usuario";
 
 export const AdminRoutes = () => {
   const { Navigator, Screen } = createStackNavigator();
@@ -21,7 +22,7 @@ export const AdminRoutes = () => {
       <Screen name="Sucesso" component={Sucesso} />
       <Screen name="Falha" component={Falha} />
       <Screen name="CriarVoto" component={CriarVoto} />
-      <Screen name="Usuario" component={View} />
+      <Screen name="Usuario" component={Usuario} />
     </Navigator>
   );
 };

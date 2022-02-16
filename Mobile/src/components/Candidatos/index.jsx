@@ -20,6 +20,8 @@ import {
 import { FlatList, Text, ToastAndroid, View } from "react-native";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { Feather } from "@expo/vector-icons";
+import { RectButton } from "react-native-gesture-handler";
 
 export const Candidatos = () => {
   const {
@@ -50,6 +52,27 @@ export const Candidatos = () => {
         ToastAndroid.show("Sucesso", 1000);
         dispatch({ type: "NOVO_CANDIDATO", data: resultado.data });
         reset();
+      }
+    }
+  };
+
+  const deletarCandidato = async (id) => {
+    const usuario = JSON.parse(await SecureStore.getItemAsync("user"));
+    if (usuario) {
+      const resultado = await api
+        .delete(`/deletarCandidato?id=${id}`, {
+          headers: {
+            Authorization: `Bearer ${usuario?.token}`,
+          },
+        })
+        .catch((err) => {
+          console.log(err.request);
+        });
+      console.log(resultado.status, resultado.data);
+      if (resultado.status == 200) {
+        dispatch({ type: "REMOVER_CANDIDATO", data: id });
+      } else {
+        console.log(resultado);
       }
     }
   };
@@ -118,6 +141,14 @@ export const Candidatos = () => {
                   <DescriptionText>{item?.cargo}</DescriptionText>
                   <DescriptionText>{item?.localizacao}</DescriptionText>
                 </GroupInfo>
+                <RectButton onPress={() => deletarCandidato(item.id)}>
+                  <Feather
+                    name="trash-2"
+                    color="#B10D0D"
+                    size={40}
+                    style={{ alignSelf: "center" }}
+                  />
+                </RectButton>
               </ViewCandidato>
             );
           }}

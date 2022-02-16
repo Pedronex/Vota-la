@@ -90,13 +90,14 @@ export const ViewCandidato = styled(View)`
   margin-bottom: 5%;
 
   flex-direction: row;
+  align-items: center;
 
   padding: 2%;
   justify-content: space-between;
 `;
 
 export const GroupInfo = styled(View)`
-  width: 75%;
+  width: 70%;
 `;
 
 export const DescriptionText = styled(Text)`

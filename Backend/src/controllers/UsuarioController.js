@@ -14,6 +14,9 @@ module.exports = {
 
     const resultado = await servico.show(login, cryptoSenha);
 
+    if (!resultado.ativo) {
+      return res.json({ erro: 'usuario inativo' })
+    }
     return res.json(resultado);
   },
 
@@ -32,9 +35,10 @@ module.exports = {
   },
 
   async update(req, res) {
-    const { login, senha, admin, ativo = true } = req.body;
-
-    const cryptoSenha = crypto.createHash("md5").update(senha).digest("hex");
+    const { login, senha, admin, ativo } = req.body;
+    let cryptoSenha;
+    if (senha)
+      cryptoSenha = crypto.createHash("md5").update(senha).digest("hex");
 
     const resultado = await servico.update(login, cryptoSenha, admin, ativo);
 

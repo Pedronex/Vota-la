@@ -3,6 +3,7 @@ import { createActions, createReducer } from "reduxsauce";
 export const { Types, Creators } = createActions({
   novaVotacao: ['candidato'],
   novoCandidato: ['candidato'],
+  removerCandidato: ['candidato'],
   limparCandidatos: ['candidato']
 });
 
@@ -17,5 +18,10 @@ export default createReducer(ESTADO_INICIAL, {
     ...state,
     listaCandidatos: [...state.listaCandidatos, action.data]
   }),
+  [Types.REMOVER_CANDIDATO]: (state, action) => ({
+    ...state,
+    listaCandidatos: [...state.listaCandidatos.filter((item) => item.id != action.data)]
+  }),
+
   [Types.LIMPAR_CANDIDATOS]: (state) => ({ idVotacao: null, listaCandidatos: [] })
 })
