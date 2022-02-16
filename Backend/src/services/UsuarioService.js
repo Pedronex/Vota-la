@@ -64,7 +64,7 @@ module.exports = {
       return { erro: "Usuário já cadastrado!" };
     } else {
       try {
-        await prismaClient.usuario.create({
+        const resultado = await prismaClient.usuario.create({
           data: {
             login,
             senha,
@@ -76,6 +76,7 @@ module.exports = {
           administrador: resultado.administrador,
         };
       } catch (erro) {
+        console.log(erro);
         return {
           erro: "Não foi possivel realizar a criação do usuário",
         };

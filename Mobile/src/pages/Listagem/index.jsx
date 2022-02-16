@@ -39,7 +39,6 @@ export const Listagem = () => {
       });
       if (resultado.status == 200) {
         setListaVotacao(resultado.data);
-        console.log(resultado.data);
       }
       setUser(user);
       setRefresh(false);
@@ -104,18 +103,17 @@ export const Listagem = () => {
           }}
         />
       </ListView>
-      {!user?.administrador && (
-        <ButtonLogout onPress={sairDoPerfil}>
-          <Feather name="log-out" size={35} />
-          <ButtonText color="#000">Sair do Perfil</ButtonText>
-        </ButtonLogout>
-      )}
-      {user?.administrador && (
+      {user?.administrador ? (
         <Footer>
           <ButtonBack onPress={voltar}>
             <ButtonText>Voltar para o menu</ButtonText>
           </ButtonBack>
         </Footer>
+      ) : (
+        <ButtonLogout onPress={sairDoPerfil}>
+          <Feather name="log-out" size={35} />
+          <ButtonText color="#000">Sair do Perfil</ButtonText>
+        </ButtonLogout>
       )}
     </Container>
   );

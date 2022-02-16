@@ -13,13 +13,14 @@ export const Container = styled(View)`
 `;
 
 export const ListView = styled(View)`
-  min-width: 80%;
+  width: 100%;
   height: 85%;
 `;
 
 export const Button = styled(RectButton)`
-  width: 100%;
+  width: 80%;
   border-radius: 30px;
+  align-self: center;
 `;
 
 export const ButtonView = styled(View)`
@@ -64,7 +65,7 @@ export const Separator = styled(View)`
   background-color: rgba(43, 6, 78, 0.75);
   border-radius: 30px;
 
-  width: 100%;
+  width: 80%;
   align-self: center;
 
   margin: 3%;

@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 
 import usuario from "./usuario";
+import candidato from './candidato'
 
 const reducers = combineReducers({
-  usuario
+  usuario,
+  candidato
 });
 
 export const rootReducer = (state, action) => {

@@ -36,6 +36,28 @@ export const ButtonView = styled(View)`
   padding: 2%;
 `;
 
+export const ButtonLogout = styled(RectButton)`
+  width: 95%;
+  height: 10%;
+  border-radius: 30px;
+`;
+
+export const ViewLogout = styled(View)`
+  width: 100%;
+  height: 100%;
+
+  background-color: #B10D0D;
+
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+
+  border-radius: 30px;
+
+  border-width: 3px;
+  border-color: #B93E3E;
+`;
+
 export const ButtonText = styled(Text)`
   width: 70%;
 
@@ -51,9 +73,4 @@ export const ButtonLogo = styled(Image).attrs({
 })`
   width: 30%;
   height: 100%;
-`;
-
-export const ButtonLogout = styled(RectButton)`
-  width: 95%;
-  align-items: center;
 `;

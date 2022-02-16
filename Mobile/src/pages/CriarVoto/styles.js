@@ -17,6 +17,16 @@ export const InfoInput = styled(Text)`
   font-size: 16px;
   text-align: left;
   font-family: ${fonts.familyContent};
+`;
+
+export const InfoData = styled(Text)`
+  font-size: 16px;
+  text-align: left;
+  background-color: rgba(0,0,0,0.16);
+  color: rgba(0,0,0,0.50);
+  border-radius: 15px;
+  padding: 5px;
+  font-family: ${fonts.familyContent};
 `
 
 export const Input = styled(TextInput).attrs({
@@ -27,8 +37,6 @@ export const Input = styled(TextInput).attrs({
   background-color: rgba(0,0,0,0.16);
   border-radius: 15px;
   padding: 5px;
-
-  margin-bottom: 5%;
 `;
 
 export const InputMultiple = styled(TextInput).attrs({
@@ -41,14 +49,44 @@ export const InputMultiple = styled(TextInput).attrs({
   border-radius: 15px;
 
   padding: 5px;
-  margin-bottom: 5%;
 `;
 
 export const TextButton = styled(Text)`
-  font-size: 16px;
-  background-color: rgba(0,0,0,0.16);
-  border-radius: 15px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  text-align: center;
+`;
 
-  padding: 5px;
-  margin-bottom: 5%;
-`
+export const Footer = styled(View)`
+  position: absolute;
+  bottom: 2%;
+  left: 0px;
+  right: 0px;
+
+  flex-direction: row;
+
+  justify-content: space-evenly;
+`;
+
+export const Button = styled(RectButton)`
+  width: 40%;
+
+  background-color: ${(props) => props?.color || "#000"};
+
+  border-radius: 10px;
+`;
+
+export const Info = styled(Text)`
+  background-color: #b10d0d;
+
+  padding: 2%;
+
+  border-radius: 10px;
+
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: Roboto_400Regular;
+  text-align: center;
+`;

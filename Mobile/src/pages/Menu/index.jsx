@@ -4,6 +4,8 @@ import {
   ButtonView,
   ButtonText,
   ButtonLogo,
+  ButtonLogout,
+  ViewLogout,
 } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
@@ -55,12 +57,12 @@ export const Menu = () => {
           <ButtonText>Gerar Relatório da Votação</ButtonText>
         </ButtonView>
       </Button>
-      <Button onPress={sairDoPerfil}>
-        <ButtonView>
-          <Feather name="log-out" size={50} color={"#fff"} />
+      <ButtonLogout onPress={sairDoPerfil}>
+        <ViewLogout>
+          <Feather name="log-out" size={40} color={"#fff"} />
           <ButtonText>Sair do Perfil</ButtonText>
-        </ButtonView>
-      </Button>
+        </ViewLogout>
+      </ButtonLogout>
     </Container>
   );
 };

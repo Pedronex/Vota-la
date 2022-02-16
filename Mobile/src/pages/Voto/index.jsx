@@ -37,7 +37,6 @@ export const Voto = () => {
           })
           .catch((erro) => {
             navigate("Falha", JSON.parse(erro.request._response).erro);
-            console.log(JSON.parse(erro.request._response));
           });
       }
       api
@@ -58,7 +57,6 @@ export const Voto = () => {
         })
         .catch((erro) => {
           navigate("Falha", JSON.parse(erro.request._response).erro);
-          console.log(JSON.parse(erro.request._response));
         });
     }
   };

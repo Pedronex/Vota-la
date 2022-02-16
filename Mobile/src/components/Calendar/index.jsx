@@ -26,10 +26,8 @@ export const Calendar = ({ onChange, editable = true, defaultValue }) => {
       setShow(false);
       setDate(currentDate);
       if (showTime) {
-        console.log("fechar");
         setShowTime(false);
       } else {
-        console.log("abrir");
         setShowTime(true);
       }
       onChange(currentDate);
