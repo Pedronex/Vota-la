@@ -13,10 +13,6 @@ module.exports = {
     const cryptoSenha = crypto.createHash("md5").update(senha).digest("hex");
 
     const resultado = await servico.show(login, cryptoSenha);
-
-    if (!resultado.ativo) {
-      return res.json({ erro: 'usuario inativo' })
-    }
     return res.json(resultado);
   },
 

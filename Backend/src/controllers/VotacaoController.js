@@ -3,7 +3,6 @@ const servico = require("../services/VotacaoService");
 module.exports = {
   async index(req, res) {
     const { id } = req;
-    console.log(id);
     const resultado = await servico.index(id);
 
     if (resultado?.erro) {

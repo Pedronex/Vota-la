@@ -13,8 +13,6 @@ async function main() {
       administrador: true,
     },
   });
-
-  console.log(admin);
 }
 
 main()

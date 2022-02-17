@@ -19,7 +19,7 @@ export const Form = styled(View)`
 `;
 
 export const ListView = styled(View)`
-  max-height: 50%;
+  max-height: 35%;
 `;
 
 export const InfoInput = styled(Text)`
@@ -97,6 +97,9 @@ export const ViewInfo = styled(RectButton)`
 export const GroupInfo = styled(View)`
   flex-direction: row;
   justify-content: space-between;
+
+  width: 100%;
+
 
   margin: 1% 0px;
 `;

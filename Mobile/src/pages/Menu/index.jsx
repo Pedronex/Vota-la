@@ -21,8 +21,9 @@ export const Menu = () => {
   }
 
   const sairDoPerfil = async () => {
-    await SecureStore.deleteItemAsync("user");
-    dispatch({ type: "LOGOUT" });
+    await SecureStore.deleteItemAsync("user").finally(() => {
+      dispatch({ type: "LOGOUT" });
+    });
   };
 
   return (

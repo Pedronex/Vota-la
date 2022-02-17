@@ -28,6 +28,9 @@ module.exports = {
     if (!usuario) {
       return { erro: "Usuário ou senha inválido!" };
     }
+    if (!usuario.ativo) {
+      return { erro: "Usuário inativo!" }
+    }
     const token = sign(
       {
         usuario: {
@@ -46,8 +49,7 @@ module.exports = {
       token,
       identificador: usuario.id,
       login,
-      administrador: usuario.administrador,
-      ativo: usuario.ativo
+      administrador: usuario.administrador
     };
   },
 
@@ -101,11 +103,10 @@ module.exports = {
         where: { login },
         data: {
           senha: senha || usuario.senha,
-          administrador: administrador || usuario.administrador,
+          administrador: administrador == undefined ? usuario.administrador : administrador,
           ativo: ativo == undefined ? usuario.ativo : ativo,
         },
       });
-      console.log(resultado)
       return { sucesso: "Dados atualizados com sucesso" };
     } catch (erro) {
       console.log(erro);

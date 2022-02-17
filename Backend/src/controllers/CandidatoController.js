@@ -38,7 +38,6 @@ module.exports = {
     }
 
     const resultado = await servico.delete(Number(id));
-    console.log(resultado);
     if (resultado?.erro) {
       return res.status(400).json(resultado);
     } else {

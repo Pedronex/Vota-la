@@ -22,7 +22,9 @@ export const Routes = () => {
             Authorization: `Bearer ${data?.token}`,
           },
         });
-        dispatch({ type: "SUCESSO", data });
+        if (usuario == null) {
+          dispatch({ type: "SUCESSO", data });
+        }
       } catch (error) {
         await SecureStore.deleteItemAsync("user");
         dispatch({ type: "LOGOUT" });
@@ -32,6 +34,7 @@ export const Routes = () => {
   };
 
   useEffect(() => {
+    console.log(usuario);
     coletarUsuario();
   }, [usuario]);
 

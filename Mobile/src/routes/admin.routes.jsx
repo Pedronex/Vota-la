@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import { Menu } from "../pages/Menu";
 import { Listagem } from "../pages/Listagem";
@@ -6,9 +6,9 @@ import { Voto } from "../pages/Voto";
 import { Sucesso } from "../pages/Sucesso";
 import { Falha } from "../pages/Falha";
 import { Detalhes } from "../pages/Detalhes";
-import { createStackNavigator } from "@react-navigation/stack";
 import { CriarVoto } from "../pages/CriarVoto";
 import { Usuario } from "../pages/Usuario";
+import { Relatorio } from "../pages/Relatorio";
 
 export const AdminRoutes = () => {
   const { Navigator, Screen } = createStackNavigator();
@@ -23,6 +23,7 @@ export const AdminRoutes = () => {
       <Screen name="Falha" component={Falha} />
       <Screen name="CriarVoto" component={CriarVoto} />
       <Screen name="Usuario" component={Usuario} />
+      <Screen name="Relatorio" component={Relatorio} />
     </Navigator>
   );
 };

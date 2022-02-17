@@ -23,7 +23,6 @@ module.exports = {
         let participou = false;
         Voto.forEach(({ usuarioId }) => {
           if (!participou) {
-            console.log(idUsuario == usuarioId);
             participou = idUsuario == usuarioId;
           }
         })
