@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { FlatList, Alert, ToastAndroid } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import * as Print from "expo-print";
-import { shareAsync } from "expo-sharing";
 import { api } from "../../Service/api";
 
 import {

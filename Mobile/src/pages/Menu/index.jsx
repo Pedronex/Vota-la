@@ -28,12 +28,6 @@ export const Menu = () => {
 
   return (
     <Container>
-      <Button onPress={() => navegarPara("Listagem")}>
-        <ButtonView>
-          <ButtonLogo source={require("../../assets/Registrar.png")} />
-          <ButtonText>Lista de Votações</ButtonText>
-        </ButtonView>
-      </Button>
       <Button onPress={() => navegarPara("CriarVoto")}>
         <ButtonView>
           <ButtonLogo source={require("../../assets/Adicionar.png")} />
@@ -46,16 +40,16 @@ export const Menu = () => {
           <ButtonText>Gerenciar Usuarios</ButtonText>
         </ButtonView>
       </Button>
-      <Button onPress={() => navegarPara("Voto")}>
+      <Button onPress={() => navegarPara("Votacao")}>
         <ButtonView>
           <ButtonLogo source={require("../../assets/Configuracao.png")} />
-          <ButtonText>Gerenciar Votação</ButtonText>
+          <ButtonText>Gerenciar Votações</ButtonText>
         </ButtonView>
       </Button>
       <Button onPress={() => navegarPara("Relatorio")}>
         <ButtonView>
           <ButtonLogo source={require("../../assets/Relatorio.png")} />
-          <ButtonText>Gerar Relatório da Votação</ButtonText>
+          <ButtonText>Gerar Relatório das Votações</ButtonText>
         </ButtonView>
       </Button>
       <ButtonLogout onPress={sairDoPerfil}>

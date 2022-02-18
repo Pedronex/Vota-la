@@ -4,7 +4,8 @@ export const { Types, Creators } = createActions({
   novaVotacao: ['candidato'],
   novoCandidato: ['candidato'],
   removerCandidato: ['candidato'],
-  limparCandidatos: ['candidato']
+  limparCandidatos: ['candidato'],
+  carregarCandidatos: ['candidato']
 });
 
 const ESTADO_INICIAL = {
@@ -22,6 +23,6 @@ export default createReducer(ESTADO_INICIAL, {
     ...state,
     listaCandidatos: [...state.listaCandidatos.filter((item) => item.id != action.data)]
   }),
-
-  [Types.LIMPAR_CANDIDATOS]: (state) => ({ idVotacao: null, listaCandidatos: [] })
+  [Types.LIMPAR_CANDIDATOS]: (state) => ({ idVotacao: null, listaCandidatos: [] }),
+  [Types.CARREGAR_CANDIDATOS]: (state, action) => ({ ...state, listaCandidatos: action.data })
 })

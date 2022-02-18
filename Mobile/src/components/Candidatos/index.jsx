@@ -17,7 +17,7 @@ import {
   TextContent,
   ViewCandidato,
 } from "./styles";
-import { FlatList, Text, ToastAndroid, View } from "react-native";
+import { Alert, FlatList, Text, ToastAndroid, View } from "react-native";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Feather } from "@expo/vector-icons";
@@ -34,46 +34,53 @@ export const Candidatos = () => {
   const { idVotacao, listaCandidatos } = useSelector(
     (state) => state.candidato
   );
+  const candidato = useSelector((state) => state.candidato);
   const dispatch = useDispatch();
 
   const onSubmit = async (data) => {
+    console.log(candidato);
     const usuario = JSON.parse(await SecureStore.getItemAsync("user"));
     if (usuario) {
-      const resultado = await api.post(
-        `/criarCandidato?id=${idVotacao}`,
-        data,
-        {
+      await api
+        .post(`/criarCandidato?id=${idVotacao}`, data, {
           headers: {
             Authorization: `Bearer ${usuario?.token}`,
           },
-        }
-      );
-      if (resultado.status == 200) {
-        ToastAndroid.show("Sucesso", 1000);
-        dispatch({ type: "NOVO_CANDIDATO", data: resultado.data });
-        reset();
-      }
+        })
+        .then((resultado) => {
+          ToastAndroid.show("Sucesso", 1000);
+          dispatch({ type: "NOVO_CANDIDATO", data: resultado.data });
+          reset();
+        })
+        .catch((erro) => {
+          console.log(erro);
+          Alert.alert(
+            "Atenção",
+            "Não foi possivel realizar a adição do candidato"
+          );
+        });
     }
   };
 
   const deletarCandidato = async (id) => {
     const usuario = JSON.parse(await SecureStore.getItemAsync("user"));
     if (usuario) {
-      const resultado = await api
+      await api
         .delete(`/deletarCandidato?id=${id}`, {
           headers: {
             Authorization: `Bearer ${usuario?.token}`,
           },
         })
+        .then((resultado) => {
+          dispatch({ type: "REMOVER_CANDIDATO", data: id });
+        })
         .catch((err) => {
-          console.log(err.request);
+          Alert.alert(
+            "Alerta",
+            "Não é possivel realizar a exclusão da votação pois há itens relacionados"
+          );
+          return null;
         });
-      console.log(resultado.status, resultado.data);
-      if (resultado.status == 200) {
-        dispatch({ type: "REMOVER_CANDIDATO", data: id });
-      } else {
-        console.log(resultado);
-      }
     }
   };
 

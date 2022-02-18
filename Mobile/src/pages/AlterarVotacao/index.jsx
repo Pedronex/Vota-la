@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as SecureStore from "expo-secure-store";
 import { Controller, useForm } from "react-hook-form";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   Button,
   Container,
@@ -20,28 +20,34 @@ import { api } from "../../Service/api";
 import { ScrollView, ToastAndroid, View } from "react-native";
 import { useDispatch } from "react-redux";
 
-export const CriarVoto = () => {
+export const Alterar = () => {
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({});
+
   const { navigate, canGoBack, goBack } = useNavigation();
+  const { params } = useRoute();
   const dispatch = useDispatch();
 
   const [votacao, setVotacao] = useState(null);
 
-  const criarVotacao = async (data) => {
+  const alterarVotacao = async (data) => {
     const { token = null } = JSON.parse(await SecureStore.getItemAsync("user"));
     if (token) {
-      const resultado = await api.post("/criarVotacao", data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const resultado = await api.put(
+        "/alterarVotacao",
+        { ...data, id: params },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (resultado.status == 200) {
-        setVotacao(resultado.data);
+        coletarInfomacoes();
         dispatch({ type: "NOVA_VOTACAO", data: resultado.data.id });
       } else {
         ToastAndroid.show(
@@ -49,6 +55,27 @@ export const CriarVoto = () => {
           3000
         );
       }
+    }
+  };
+
+  const coletarInfomacoes = async () => {
+    const { token } = JSON.parse(await SecureStore.getItemAsync("user"));
+    if (token) {
+      const resultado = await api.get(`/votacao?id=${params}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (resultado.data != null) {
+        setVotacao(resultado.data);
+        console.log(resultado.data);
+        dispatch({ type: "NOVA_VOTACAO", data: resultado.data.id });
+        dispatch({
+          type: "CARREGAR_CANDIDATOS",
+          data: resultado.data.Candidato,
+        });
+      }
+      return resultado.data;
     }
   };
 
@@ -60,6 +87,10 @@ export const CriarVoto = () => {
       navigate("Menu");
     }
   };
+
+  useEffect(() => {
+    coletarInfomacoes();
+  }, []);
 
   if (votacao) {
     return (
@@ -89,8 +120,11 @@ export const CriarVoto = () => {
             editable={false}
           />
         </ScrollView>
-        <Candidatos idVotacao={votacao.id} />
+        <Candidatos idVotacao={params} />
         <Footer>
+          <Button color="#A4A729" onPress={() => setVotacao(null)}>
+            <TextButton>Alterar Votação</TextButton>
+          </Button>
           <Button color="#B10D0D" onPress={voltar}>
             <TextButton>Voltar</TextButton>
           </Button>
@@ -113,13 +147,19 @@ export const CriarVoto = () => {
           render={({ field: { onChange, onBlur, value } }) => (
             <>
               <InfoInput>Título:</InfoInput>
-              <Input onBlur={onBlur} onChangeText={onChange} value={value} />
+              <Input
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                defaultValue=""
+              />
             </>
           )}
           name="titulo"
           rules={{
             required: true,
           }}
+          defaultValue=""
         />
         {errors?.titulo && <Info>O campo acima é obrigatório</Info>}
         <Controller
@@ -131,10 +171,12 @@ export const CriarVoto = () => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
+                defaultValue={""}
               />
             </>
           )}
           name="descricao"
+          defaultValue=""
         />
         <Controller
           control={control}
@@ -144,7 +186,7 @@ export const CriarVoto = () => {
               <Calendar
                 onChange={onChange}
                 value={value}
-                defaultValue={Date.now()}
+                defaultValue={new Date().getTime()}
               />
             </>
           )}
@@ -152,6 +194,7 @@ export const CriarVoto = () => {
           rules={{
             required: true,
           }}
+          defaultValue=""
         />
         {errors?.inicio && <Info>Confirme a data acima</Info>}
         <Controller
@@ -174,8 +217,8 @@ export const CriarVoto = () => {
         {errors?.fim && <Info>Confirme a data acima</Info>}
       </View>
       <Footer>
-        <Button color="#195923" onPress={handleSubmit(criarVotacao)}>
-          <TextButton>Criar Votação</TextButton>
+        <Button color="#A4A729" onPress={handleSubmit(alterarVotacao)}>
+          <TextButton>Salvar Alteração</TextButton>
         </Button>
         <Button color="#B10D0D" onPress={voltar}>
           <TextButton>Voltar</TextButton>

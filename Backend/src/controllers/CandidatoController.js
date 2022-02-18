@@ -5,6 +5,8 @@ module.exports = {
     const { nome, cargo, localizacao } = req.body;
     const { id } = req.query;
 
+    console.log(id);
+
     if (isNaN(id)) {
       return res.status(400).json({ erro: "Tipo de id Inválido!" });
     }
