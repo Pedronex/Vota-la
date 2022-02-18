@@ -40,3 +40,46 @@ export function formatDateTime(textDate) {
 
   return formatDate;
 }
+
+export function formatDateTimeReport(textDate) {
+  const date = new Date(textDate);
+  let formatDate = "";
+
+  //Dia
+  if (date.getDate() < 10) {
+    formatDate += "0" + date.getDate();
+  } else {
+    formatDate += date.getDate();
+  }
+
+  formatDate += "/";
+  //Mês
+  if (date.getMonth() + 1 < 10) {
+    formatDate += "0" + (date.getMonth() + 1);
+  } else {
+    formatDate += date.getMonth() + 1;
+  }
+
+  formatDate += "/";
+  //Ano
+  formatDate += date.getFullYear();
+  formatDate += " ";
+
+  //Hora
+  if (date.getHours() < 10) {
+    formatDate += "0" + date.getHours();
+  } else {
+    formatDate += date.getHours();
+  }
+
+  formatDate += "h:";
+
+  //Minutos
+  if (date.getMinutes() < 10) {
+    formatDate += "0" + date.getMinutes() + 'min';
+  } else {
+    formatDate += date.getMinutes() + 'min';
+  }
+
+  return formatDate;
+}
