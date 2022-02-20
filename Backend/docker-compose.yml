@@ -1,6 +1,14 @@
 version: '3.8'
 
 services:
+  server:
+    build: .
+    command: yarn start
+    environment:
+      - DATABASE_URL=mysql://root:pedrosilva@database:3306/votacao
+      - JWT_SECRET=senhaSecreta
+    depends_on:
+      - database
   database:
     image: mysql
     cap_add:

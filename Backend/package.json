@@ -6,10 +6,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "install": "prisma migrate dev && prisma db seed",
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "build": "docker-compose up"
+    "build": "prisma migrate dev && prisma db seed"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
