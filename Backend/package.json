@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@prisma/client": "^3.9.1",
-    "@vercel/node": "^1.12.1",
     "dotenv": "^15.0.0",
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1"
