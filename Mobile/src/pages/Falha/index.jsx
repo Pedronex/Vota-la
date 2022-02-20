@@ -13,7 +13,7 @@ export const Falha = () => {
   const route = useRoute();
 
   const voltar = () => {
-    navigation.navigate("Listagem");
+    navigation.navigate("Listagem") || navigation.navigate("Menu");
   };
 
   return (

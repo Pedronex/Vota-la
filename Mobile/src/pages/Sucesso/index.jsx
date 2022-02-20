@@ -12,7 +12,7 @@ export const Sucesso = () => {
   const navigation = useNavigation();
 
   const voltar = () => {
-    navigation.navigate("Listagem");
+    navigation.navigate("Listagem") || navigation.navigate("Menu");
   };
 
   return (
