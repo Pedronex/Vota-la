@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -25,9 +23,6 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.pedronex.Votala"
-    },
-    "extra": {
-      "IP_SERVER": "192.168.1.11"
     },
     "androidNavigationBar": {
       "backgroundColor": "#453f8f",

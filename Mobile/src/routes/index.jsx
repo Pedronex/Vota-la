@@ -8,6 +8,7 @@ import { AppRoutes } from "./app.routes";
 import { AuthRoutes } from "./auth.routes";
 import { AdminRoutes } from "./admin.routes";
 import { ToastAndroid } from "react-native";
+import Constants from "expo-constants";
 
 export const Routes = () => {
   const usuario = useSelector((state) => state.usuario.dados);
@@ -34,7 +35,9 @@ export const Routes = () => {
   };
 
   useEffect(() => {
-    console.log(usuario);
+    console.log(
+      `http://${Constants.manifest.extra.IP_SERVER}:${Constants.manifest.extra.PORT}`
+    );
     coletarUsuario();
   }, [usuario]);
 
