@@ -4,6 +4,8 @@ services:
   server:
     build: .
     command: yarn start
+    ports:
+      - 3000:3000
     environment:
       - DATABASE_URL=mysql://root:pedrosilva@database:3306/votacao
       - JWT_SECRET=senhaSecreta
