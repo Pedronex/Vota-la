@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js",
+    "start": "prisma migrate dev && prisma db seed && node index.js",
     "build": "prisma migrate dev && prisma db seed"
   },
   "prisma": {
