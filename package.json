@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "react-router-dom": "^6.2.2",
+    "styled-components": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/styled-components": "^5.1.24"
+  }
+}
